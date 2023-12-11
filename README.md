@@ -1,5 +1,7 @@
 # simulink-moneyflow-library
 
+[![View Money Flow - Library and Examples on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/84270-money-flow-library-and-examples)
+
 This is a Simulink&reg; library consisting of:
 
 -) A block modeling a bank account that earns interest after each period
