@@ -46,8 +46,8 @@ __MWOPC_PART_BEGIN__ /metadata/coreProperties.xml
   <dc:creator>gcampa</dc:creator>
   <dc:description></dc:description>
   <cp:lastModifiedBy>gcampa</cp:lastModifiedBy>
-  <dcterms:modified xsi:type="dcterms:W3CDTF">2023-12-10T23:09:12Z</dcterms:modified>
-  <cp:revision>7.10</cp:revision>
+  <dcterms:modified xsi:type="dcterms:W3CDTF">2024-06-12T21:24:51Z</dcterms:modified>
+  <cp:revision>7.16</cp:revision>
   <cp:version>R2023b</cp:version>
 </cp:coreProperties>
 
@@ -69,11 +69,11 @@ __MWOPC_PART_BEGIN__ /metadata/mwcorePropertiesReleaseInfo.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Version information for MathWorks R2023b Release -->
 <MathWorks_version_info>
-  <version>23.2.0.2365128</version>
+  <version>23.2.0.2635688</version>
   <release>R2023b</release>
-  <description></description>
-  <date>Aug 23 2023</date>
-  <checksum>1948793428</checksum>
+  <description>Update 9</description>
+  <date>Jun 05 2024</date>
+  <checksum>2580254925</checksum>
 </MathWorks_version_info>
 
 __MWOPC_PART_BEGIN__ /simulink/_rels/blockdiagram.xml.rels
@@ -115,17 +115,22 @@ __MWOPC_PART_BEGIN__ /simulink/blockdiagram.xml
 <ModelInformation Version="1.0">
   <Model>
     <P Name="ModelUUID">08c89ba3-ae97-48cb-8f64-3a385f9e213e</P>
-    <P Name="PreLoadFcn">% K goes from 0 (all to roth) to 1 (all to deferred)
-k=17/19;</P>
-    <P Name="StopFcn">Cash    = xFinal.loggedStates(1).values + ... % after tax
-              xFinal.loggedStates(3).values;      % roth
-    
-Taxable = xFinal.loggedStates(4).values + ... % hsa
-               xFinal.loggedStates(2).values + ... % deferred
-              xFinal.loggedStates(15).values + ... % tiaa
-              xFinal.loggedStates(17).values;      % company match
+    <P Name="StopFcn">% Black displays
+Cash    = simROTH(end) + ... 
+          simATRC(end) + ...
+          simChecking(end) + ... 
+          simSaving(end);      
+
+% Blue displays
+Taxable = simDeferred(end) + ... 
+          simHSA(end) + ... 
+          simMatch(end) + ... 
+          simTIAA(end); 
       
-Taxes = xFinal.loggedStates(7).values; % cumulative taxes
+% Red display
+Taxes = simTaxes(end);             % cumulative taxes
+
+clear simATRC simChecking simDeferred simHSA simMatch simROTH simSaving simTaxes simTIAA
 
 % Note that technically the after tax account growth 
 % is taxable (only the growth), however it&apos;s not taxable
@@ -136,7 +141,7 @@ Taxes = xFinal.loggedStates(7).values; % cumulative taxes
     <ConfigManagerSettings>
       <P Name="ModifiedByFormat">%&lt;Auto&gt;</P>
       <P Name="ModifiedDateFormat">%&lt;Auto&gt;</P>
-      <P Name="ModelVersionFormat">%&lt;AutoIncrement:7.10&gt;</P>
+      <P Name="ModelVersionFormat">%&lt;AutoIncrement:7.16&gt;</P>
     </ConfigManagerSettings>
     <EditorSettings>
       <P Name="ScheduleConnectors">off</P>
@@ -182,7 +187,7 @@ __MWOPC_PART_BEGIN__ /simulink/configSet0.xml
         <P Name="Description"/>
         <P Name="Components" Class="double">[]</P>
         <P Name="StartTime">0.0</P>
-        <P Name="StopTime">2035-year(now)</P>
+        <P Name="StopTime">15</P>
         <P Name="AbsTol">auto</P>
         <P Name="AutoScaleAbsTol">on</P>
         <P Name="FixedStep">auto</P>
@@ -234,7 +239,7 @@ __MWOPC_PART_BEGIN__ /simulink/configSet0.xml
         <P Name="MaxDataPoints">1000</P>
         <P Name="LoadExternalInput">off</P>
         <P Name="LoadInitialState">off</P>
-        <P Name="SaveFinalState">on</P>
+        <P Name="SaveFinalState">off</P>
         <P Name="SaveOperatingPoint">on</P>
         <P Name="SaveFormat">Array</P>
         <P Name="SignalLoggingSaveFormat">Dataset</P>
@@ -925,7 +930,7 @@ __MWOPC_PART_BEGIN__ /simulink/configSet0.xml
     </Array>
     <P Name="Name">Configuration</P>
     <P Name="CurrentDlgPage">Data Import//Export</P>
-    <P Name="ConfigPrmDlgPosition">[ 71, 71, 1135, 628 ]</P>
+    <P Name="ConfigPrmDlgPosition">[ 71, 70, 1135, 628 ]</P>
     <P Name="ExtraOptions"/>
   </Object>
 </ConfigSet>
@@ -1034,8 +1039,8 @@ __MWOPC_PART_BEGIN__ /simulink/hdlParams.xml
 __MWOPC_PART_BEGIN__ /simulink/modelDictionary.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <MF0 version="1.1" defaultPackage="slid" packageUris="http://schema.mathworks.com/mf0/slid/R2023a_20220628">
-  <System type="System" uuid="bbd1e6ae-73ea-4888-b5dc-6ec27fb9b3ab">
-    <Interface type="Interface" uuid="16a4dd24-ee35-4473-bf07-98a8b520f20b"/>
+  <System type="System" uuid="d8efb8ee-aeda-4038-8dc5-00a9f2e09288">
+    <Interface type="Interface" uuid="6d36eddb-01e7-41d2-b7d8-a97c1146ac27"/>
   </System>
 </MF0>
 __MWOPC_PART_BEGIN__ /simulink/ScheduleCore.xml
@@ -1142,15 +1147,15 @@ __MWOPC_PART_BEGIN__ /simulink/systems/_rels/system_root.xml.rels
 __MWOPC_PART_BEGIN__ /simulink/systems/system_491.xml
 <?xml version="1.0" encoding="utf-8"?>
 <System>
-  <P Name="Location">[1430, 65, 2500, 908]</P>
+  <P Name="Location">[5089, 469, 6119, 1287]</P>
   <P Name="ScreenColor">automatic</P>
   <Annotation SID="492">
     <P Name="Name">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body align=&quot;left&quot; style=&quot; font-family:&apos;Helvetica&apos;; font-size:10px; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;left&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14px;&quot;&gt;This simulation shows how an annual income flows from the paycheck into several banking and investment accounts, over a contribution period of 35 years. The blue blocks handle pre-tax income, the red one handle taxex, and the black ones handle post-tax income. &lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;left&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14px;&quot;&gt;&lt;br /&gt;The yearly income is assumed constant and equal to 150K$, (though in reality it would increase over time). About 25% of income is used for taxes and the remaining 75% gets distributed to various destinations (4% in a tax deferred HSA, 17% to tax deferred 401K, 2% to a Roth 401K, 20% to a savings account, and 20% to a checking account, plus a small amount in pre-tax medical expenses). Retirement accounts earn an interest rate of 3% at the end of each year, while savings and checking accounts do not earn interest (see the account mask parameters). Note that a parameter k that is loaded by a PreLoadFcn (see Model Settings -&amp;gt; Model Properties -&amp;gt; Callbacks -&amp;gt; PreLoadFcn) regulates the inflow of tax-deferred vs roth accounts (k=0 means 19% goes to tax deferred 401K and 0% to Roth 401k, k=1 all 19% goes to Roth).&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;left&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14px;&quot;&gt;This simulation shows how an annual income flows from the paycheck into several banking and investment accounts, over a contribution period of 15 years. The blue blocks handle pre-tax income, the red one handle taxes, and the black ones handle post-tax income. &lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;left&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14px;&quot;&gt;&lt;br /&gt;The yearly income is assumed constant and equal to 150K$, (though in reality it would increase over time). About 26% of income is used for taxes, about 24% goes to three retirement accounts (12% to tax deferred 401K, 1% to a Roth 401K, 11% to an after tax voluntary Roth), about 7% goes to medical insurance and a tax deferred HSA account) and the remaining 43% goes to a checking and a savings account. Retirement accounts earn an interest rate of 3% at the end of each year, while savings and checking accounts do not earn interest (see the account mask parameters).&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;left&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;left&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14px;&quot;&gt;Inflation is set to 2% at year (see the account blocks mask parameters), but it has an effect only on the Checking account, (because is the only one with nonzero expenses), specifically causing the expense withdrawals to increase progressively each year. Note that the 401K account and the 401K Roth one start with 50K$ and 10K% respectively, at the beginning of the simulation.&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;left&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
@@ -1169,11 +1174,11 @@ p, li { white-space: pre-wrap; }
 __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
 <?xml version="1.0" encoding="utf-8"?>
 <System>
-  <P Name="Location">[1430, 65, 2500, 908]</P>
+  <P Name="Location">[155, 129, 1185, 947]</P>
   <P Name="Open">on</P>
   <P Name="ZoomFactor">81</P>
   <P Name="ReportName">simulink-default.rpt</P>
-  <P Name="SIDHighWatermark">502</P>
+  <P Name="SIDHighWatermark">511</P>
   <Block BlockType="Gain" Name="+Life Insurance" SID="440">
     <P Name="Position">[-305, 260, -250, 290]</P>
     <P Name="ZOrder">156</P>
@@ -1285,7 +1290,7 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
     <P Name="ZOrder">119</P>
     <P Name="BlockMirror">on</P>
     <P Name="ForegroundColor">blue</P>
-    <P Name="Gain">0.0165</P>
+    <P Name="Gain">0.02</P>
   </Block>
   <Block BlockType="Display" Name="Display" SID="21">
     <PortCounts in="1"/>
@@ -1354,14 +1359,6 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
     <PortCounts in="1"/>
     <P Name="Position">[-225, 595, -135, 625]</P>
     <P Name="ZOrder">123</P>
-    <P Name="BlockMirror">on</P>
-    <P Name="Format">bank</P>
-    <P Name="Decimation">1</P>
-  </Block>
-  <Block BlockType="Display" Name="Display7" SID="360">
-    <PortCounts in="1"/>
-    <P Name="Position">[-225, 680, -135, 710]</P>
-    <P Name="ZOrder">131</P>
     <P Name="BlockMirror">on</P>
     <P Name="Format">bank</P>
     <P Name="Decimation">1</P>
@@ -1443,7 +1440,7 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
     <P Name="Position">[210, 225, 265, 255]</P>
     <P Name="ZOrder">100</P>
     <P Name="ForegroundColor">blue</P>
-    <P Name="Gain">0.19*k</P>
+    <P Name="Gain">0.12</P>
   </Block>
   <Block BlockType="Gain" Name="Gain 401k &#xA;Voluntary After Tax" SID="347">
     <P Name="Position">[205, 425, 260, 455]</P>
@@ -1453,29 +1450,23 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
   <Block BlockType="Gain" Name="Gain Chase Checking" SID="356">
     <P Name="Position">[205, 680, 260, 710]</P>
     <P Name="ZOrder">127</P>
-    <P Name="Gain">0.20</P>
+    <P Name="Gain">0.35</P>
   </Block>
   <Block BlockType="Gain" Name="Gain Chase Saving" SID="358">
     <P Name="Position">[205, 595, 260, 625]</P>
     <P Name="ZOrder">129</P>
-    <P Name="Gain">0.20</P>
+    <P Name="Gain">0.07</P>
   </Block>
   <Block BlockType="Gain" Name="Gain HSA (Pre Tax)" SID="344">
     <P Name="Position">[210, 140, 265, 170]</P>
     <P Name="ZOrder">118</P>
     <P Name="ForegroundColor">blue</P>
-    <P Name="Gain">0.04</P>
+    <P Name="Gain">0.037</P>
   </Block>
   <Block BlockType="Gain" Name="Gain Roth 401k &#xA;(After Tax)" SID="216">
     <P Name="Position">[205, 345, 295, 375]</P>
     <P Name="ZOrder">101</P>
-    <P Name="Gain">0.19*(1-k)</P>
-  </Block>
-  <Block BlockType="Gain" Name="Gain United Bank&#xA;Child Support" SID="359">
-    <P Name="Position">[-25, 680, 30, 710]</P>
-    <P Name="ZOrder">130</P>
-    <P Name="BlockMirror">on</P>
-    <P Name="Gain">0.15</P>
+    <P Name="Gain">0.01</P>
   </Block>
   <Block BlockType="Goto" Name="Goto" SID="432">
     <P Name="Position">[-5, 102, 30, 118]</P>
@@ -1565,7 +1556,6 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
     <P Name="Position">[580, 300, 670, 330]</P>
     <P Name="ZOrder">104</P>
     <P Name="ForegroundColor">magenta</P>
-    <P Name="NameLocation">top</P>
     <P Name="Format">bank</P>
     <P Name="Decimation">1</P>
   </Block>
@@ -1638,18 +1628,6 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
     <P Name="ZOrder">90</P>
     <P Name="ForegroundColor">red</P>
     <P Name="Gain">0.062</P>
-  </Block>
-  <Block BlockType="Saturate" Name="Saturation" SID="403">
-    <P Name="Position">[325, 595, 355, 625]</P>
-    <P Name="ZOrder">139</P>
-    <P Name="UpperLimit">1000*(26+4)</P>
-  </Block>
-  <Block BlockType="Saturate" Name="Saturation1" SID="404">
-    <P Name="Position">[-95, 680, -65, 710]</P>
-    <P Name="ZOrder">140</P>
-    <P Name="BlockMirror">on</P>
-    <P Name="UpperLimit">785*26</P>
-    <P Name="LowerLimit">785*26</P>
   </Block>
   <Block BlockType="Reference" Name="Savings" SID="498">
     <PortCounts in="2" out="1"/>
@@ -1761,6 +1739,93 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
       </Port>
     </PortProperties>
   </Block>
+  <Block BlockType="ToWorkspace" Name="To Workspace" SID="503">
+    <PortCounts in="1"/>
+    <P Name="Position">[-340, 467, -290, 483]</P>
+    <P Name="ZOrder">348</P>
+    <P Name="BlockMirror">on</P>
+    <P Name="ForegroundColor">red</P>
+    <P Name="VariableName">simTaxes</P>
+    <P Name="MaxDataPoints">inf</P>
+    <P Name="Save2DSignal">2-D array (concatenate along first dimension)</P>
+    <P Name="SampleTime">-1</P>
+  </Block>
+  <Block BlockType="ToWorkspace" Name="To Workspace1" SID="504">
+    <PortCounts in="1"/>
+    <P Name="Position">[580, 392, 630, 408]</P>
+    <P Name="ZOrder">341</P>
+    <P Name="VariableName">simROTH</P>
+    <P Name="MaxDataPoints">inf</P>
+    <P Name="Save2DSignal">2-D array (concatenate along first dimension)</P>
+    <P Name="SampleTime">-1</P>
+  </Block>
+  <Block BlockType="ToWorkspace" Name="To Workspace2" SID="505">
+    <PortCounts in="1"/>
+    <P Name="Position">[580, 472, 630, 488]</P>
+    <P Name="ZOrder">342</P>
+    <P Name="VariableName">simATRC</P>
+    <P Name="MaxDataPoints">inf</P>
+    <P Name="Save2DSignal">2-D array (concatenate along first dimension)</P>
+    <P Name="SampleTime">-1</P>
+  </Block>
+  <Block BlockType="ToWorkspace" Name="To Workspace3" SID="506">
+    <PortCounts in="1"/>
+    <P Name="Position">[580, 642, 630, 658]</P>
+    <P Name="ZOrder">343</P>
+    <P Name="VariableName">simSaving</P>
+    <P Name="MaxDataPoints">inf</P>
+    <P Name="Save2DSignal">2-D array (concatenate along first dimension)</P>
+    <P Name="SampleTime">-1</P>
+  </Block>
+  <Block BlockType="ToWorkspace" Name="To Workspace4" SID="507">
+    <PortCounts in="1"/>
+    <P Name="Position">[580, 677, 630, 693]</P>
+    <P Name="ZOrder">344</P>
+    <P Name="VariableName">simChecking</P>
+    <P Name="MaxDataPoints">inf</P>
+    <P Name="Save2DSignal">2-D array (concatenate along first dimension)</P>
+    <P Name="SampleTime">-1</P>
+  </Block>
+  <Block BlockType="ToWorkspace" Name="To Workspace5" SID="508">
+    <PortCounts in="1"/>
+    <P Name="Position">[-225, 667, -175, 683]</P>
+    <P Name="ZOrder">349</P>
+    <P Name="ForegroundColor">blue</P>
+    <P Name="VariableName">simTIAA</P>
+    <P Name="MaxDataPoints">inf</P>
+    <P Name="Save2DSignal">2-D array (concatenate along first dimension)</P>
+    <P Name="SampleTime">-1</P>
+  </Block>
+  <Block BlockType="ToWorkspace" Name="To Workspace6" SID="509">
+    <PortCounts in="1"/>
+    <P Name="Position">[580, 557, 630, 573]</P>
+    <P Name="ZOrder">345</P>
+    <P Name="ForegroundColor">blue</P>
+    <P Name="VariableName">simMatch</P>
+    <P Name="MaxDataPoints">inf</P>
+    <P Name="Save2DSignal">2-D array (concatenate along first dimension)</P>
+    <P Name="SampleTime">-1</P>
+  </Block>
+  <Block BlockType="ToWorkspace" Name="To Workspace7" SID="510">
+    <PortCounts in="1"/>
+    <P Name="Position">[580, 272, 630, 288]</P>
+    <P Name="ZOrder">346</P>
+    <P Name="ForegroundColor">blue</P>
+    <P Name="VariableName">simDeferred</P>
+    <P Name="MaxDataPoints">inf</P>
+    <P Name="Save2DSignal">2-D array (concatenate along first dimension)</P>
+    <P Name="SampleTime">-1</P>
+  </Block>
+  <Block BlockType="ToWorkspace" Name="To Workspace8" SID="511">
+    <PortCounts in="1"/>
+    <P Name="Position">[580, 187, 630, 203]</P>
+    <P Name="ZOrder">347</P>
+    <P Name="ForegroundColor">blue</P>
+    <P Name="VariableName">simHSA</P>
+    <P Name="MaxDataPoints">inf</P>
+    <P Name="Save2DSignal">2-D array (concatenate along first dimension)</P>
+    <P Name="SampleTime">-1</P>
+  </Block>
   <Block BlockType="Display" Name="Total Taxes" SID="463">
     <PortCounts in="1"/>
     <P Name="Position">[-340, 485, -250, 515]</P>
@@ -1798,7 +1863,16 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
   <Line>
     <P Name="ZOrder">578</P>
     <P Name="Src">496#out:1</P>
-    <P Name="Dst">21#in:1</P>
+    <P Name="Points">[42, 0]</P>
+    <Branch>
+      <P Name="ZOrder">693</P>
+      <P Name="Points">[0, 25]</P>
+      <P Name="Dst">505#in:1</P>
+    </Branch>
+    <Branch>
+      <P Name="ZOrder">692</P>
+      <P Name="Dst">21#in:1</P>
+    </Branch>
   </Line>
   <Line>
     <P Name="ZOrder">576</P>
@@ -1840,12 +1914,30 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
   <Line>
     <P Name="ZOrder">572</P>
     <P Name="Src">494#out:1</P>
-    <P Name="Dst">150#in:1</P>
+    <P Name="Points">[40, 0]</P>
+    <Branch>
+      <P Name="ZOrder">689</P>
+      <P Name="Points">[0, 25]</P>
+      <P Name="Dst">510#in:1</P>
+    </Branch>
+    <Branch>
+      <P Name="ZOrder">688</P>
+      <P Name="Dst">150#in:1</P>
+    </Branch>
   </Line>
   <Line>
     <P Name="ZOrder">581</P>
     <P Name="Src">497#out:1</P>
-    <P Name="Dst">153#in:1</P>
+    <P Name="Points">[42, 0]</P>
+    <Branch>
+      <P Name="ZOrder">695</P>
+      <P Name="Points">[0, 25]</P>
+      <P Name="Dst">509#in:1</P>
+    </Branch>
+    <Branch>
+      <P Name="ZOrder">694</P>
+      <P Name="Dst">153#in:1</P>
+    </Branch>
   </Line>
   <Line>
     <P Name="ZOrder">579</P>
@@ -1878,7 +1970,16 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
   <Line>
     <P Name="ZOrder">575</P>
     <P Name="Src">495#out:1</P>
-    <P Name="Dst">175#in:1</P>
+    <P Name="Points">[45, 0]</P>
+    <Branch>
+      <P Name="ZOrder">691</P>
+      <P Name="Points">[0, 25]</P>
+      <P Name="Dst">504#in:1</P>
+    </Branch>
+    <Branch>
+      <P Name="ZOrder">690</P>
+      <P Name="Dst">175#in:1</P>
+    </Branch>
   </Line>
   <Line>
     <P Name="ZOrder">596</P>
@@ -1979,14 +2080,7 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
           <Branch>
             <P Name="ZOrder">275</P>
             <P Name="Points">[0, 85]</P>
-            <Branch>
-              <P Name="ZOrder">264</P>
-              <P Name="Dst">356#in:1</P>
-            </Branch>
-            <Branch>
-              <P Name="ZOrder">248</P>
-              <P Name="Dst">359#in:1</P>
-            </Branch>
+            <P Name="Dst">356#in:1</P>
           </Branch>
           <Branch>
             <P Name="ZOrder">246</P>
@@ -2018,7 +2112,16 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
   <Line>
     <P Name="ZOrder">569</P>
     <P Name="Src">493#out:1</P>
-    <P Name="Dst">343#in:1</P>
+    <P Name="Points">[41, 0]</P>
+    <Branch>
+      <P Name="ZOrder">687</P>
+      <P Name="Points">[0, 25]</P>
+      <P Name="Dst">511#in:1</P>
+    </Branch>
+    <Branch>
+      <P Name="ZOrder">686</P>
+      <P Name="Dst">343#in:1</P>
+    </Branch>
   </Line>
   <Line>
     <P Name="ZOrder">193</P>
@@ -2065,11 +2168,6 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
     <P Name="Dst">350#in:1</P>
   </Line>
   <Line>
-    <P Name="ZOrder">250</P>
-    <P Name="Src">359#out:1</P>
-    <P Name="Dst">404#in:1</P>
-  </Line>
-  <Line>
     <P Name="ZOrder">585</P>
     <P Name="Src">356#out:1</P>
     <P Name="Dst">499#in:1</P>
@@ -2077,7 +2175,16 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
   <Line>
     <P Name="ZOrder">587</P>
     <P Name="Src">499#out:1</P>
-    <P Name="Dst">380#in:1</P>
+    <P Name="Points">[40, 0]</P>
+    <Branch>
+      <P Name="ZOrder">699</P>
+      <P Name="Points">[0, -25]</P>
+      <P Name="Dst">507#in:1</P>
+    </Branch>
+    <Branch>
+      <P Name="ZOrder">698</P>
+      <P Name="Dst">380#in:1</P>
+    </Branch>
   </Line>
   <Line>
     <P Name="ZOrder">315</P>
@@ -2094,14 +2201,18 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
     </Branch>
   </Line>
   <Line>
-    <P Name="ZOrder">255</P>
-    <P Name="Src">358#out:1</P>
-    <P Name="Dst">403#in:1</P>
-  </Line>
-  <Line>
     <P Name="ZOrder">584</P>
     <P Name="Src">498#out:1</P>
-    <P Name="Dst">401#in:1</P>
+    <P Name="Points">[40, 0]</P>
+    <Branch>
+      <P Name="ZOrder">697</P>
+      <P Name="Points">[0, 25]</P>
+      <P Name="Dst">506#in:1</P>
+    </Branch>
+    <Branch>
+      <P Name="ZOrder">696</P>
+      <P Name="Dst">401#in:1</P>
+    </Branch>
   </Line>
   <Line>
     <P Name="ZOrder">583</P>
@@ -2109,14 +2220,9 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
     <P Name="Dst">498#in:2</P>
   </Line>
   <Line>
-    <P Name="ZOrder">582</P>
-    <P Name="Src">403#out:1</P>
+    <P Name="ZOrder">666</P>
+    <P Name="Src">358#out:1</P>
     <P Name="Dst">498#in:1</P>
-  </Line>
-  <Line>
-    <P Name="ZOrder">308</P>
-    <P Name="Src">404#out:1</P>
-    <P Name="Dst">360#in:1</P>
   </Line>
   <Line>
     <P Name="ZOrder">324</P>
@@ -2135,7 +2241,16 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
   <Line>
     <P Name="ZOrder">589</P>
     <P Name="Src">500#out:1</P>
-    <P Name="Dst">431#in:1</P>
+    <P Name="Points">[19, 0]</P>
+    <Branch>
+      <P Name="ZOrder">701</P>
+      <P Name="Points">[0, 25]</P>
+      <P Name="Dst">508#in:1</P>
+    </Branch>
+    <Branch>
+      <P Name="ZOrder">700</P>
+      <P Name="Dst">431#in:1</P>
+    </Branch>
   </Line>
   <Line>
     <P Name="ZOrder">381</P>
@@ -2199,7 +2314,16 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
   <Line>
     <P Name="ZOrder">594</P>
     <P Name="Src">501#out:1</P>
-    <P Name="Dst">463#in:1</P>
+    <P Name="Points">[-24, 0]</P>
+    <Branch>
+      <P Name="ZOrder">703</P>
+      <P Name="Points">[0, -25]</P>
+      <P Name="Dst">503#in:1</P>
+    </Branch>
+    <Branch>
+      <P Name="ZOrder">702</P>
+      <P Name="Dst">463#in:1</P>
+    </Branch>
   </Line>
   <Line>
     <P Name="ZOrder">595</P>
@@ -2227,7 +2351,7 @@ __MWOPC_PART_BEGIN__ /simulink/windowsInfo.xml
   <Object PropName="BdWindowsInfo" ObjectID="1" ClassName="Simulink.BDWindowsInfo">
     <Object PropName="WindowsInfo" ObjectID="2" ClassName="Simulink.WindowInfo">
       <P Name="IsActive" Class="logical">1</P>
-      <P Name="Location" Class="double">[1430.0, 65.0, 1070.0, 843.0]</P>
+      <P Name="Location" Class="double">[155.0, 129.0, 1030.0, 818.0]</P>
       <Object PropName="ModelBrowserInfo" ObjectID="3" ClassName="Simulink.ModelBrowserInfo">
         <P Name="Visible" Class="logical">0</P>
         <P Name="DockPosition" Class="char">Left</P>
@@ -2245,20 +2369,20 @@ __MWOPC_PART_BEGIN__ /simulink/windowsInfo.xml
           <P Name="IsTabbed" Class="logical">1</P>
           <P Name="ViewObjType" Class="char">SimulinkTopLevel</P>
           <P Name="LoadSaveID" Class="char">0</P>
-          <P Name="Extents" Class="double">[1030.0, 607.0]</P>
+          <P Name="Extents" Class="double">[990.0, 582.0]</P>
           <P Name="ZoomFactor" Class="double">0.80798668885191349</P>
-          <P Name="Offset" Class="double">[-523.10631770203076, 54.9517729338628]</P>
-          <P Name="SceneRectInView" Class="double">[-523.10631770203076, 54.9517729338628, 1274.7734761120264, 751.25]</P>
+          <P Name="Offset" Class="double">[-523.10631770203076, 83.417588419859456]</P>
+          <P Name="SceneRectInView" Class="double">[-523.10631770203076, 83.417588419859456, 1225.2677100494234, 720.30889621087317]</P>
         </Object>
         <Object ObjectID="6">
           <P Name="IsActive" Class="logical">0</P>
           <P Name="IsTabbed" Class="logical">0</P>
           <P Name="ViewObjType" Class="char">SimulinkSubsys</P>
           <P Name="LoadSaveID" Class="char">491</P>
-          <P Name="Extents" Class="double">[1030.0, 607.0]</P>
+          <P Name="Extents" Class="double">[990.0, 582.0]</P>
           <P Name="ZoomFactor" Class="double">1.0</P>
           <P Name="Offset" Class="double">[31.67499965429306, -121.0]</P>
-          <P Name="SceneRectInView" Class="double">[31.67499965429306, -121.0, 1030.0, 607.0]</P>
+          <P Name="SceneRectInView" Class="double">[31.67499965429306, -121.0, 990.0, 582.0]</P>
         </Object>
         <Object ObjectID="7">
           <P Name="IsActive" Class="logical">0</P>
@@ -2343,6 +2467,18 @@ __MWOPC_PART_BEGIN__ /simulink/windowsInfo.xml
       </Array>
       <Array PropName="DockComponentsInfo" Type="Simulink.DockComponentInfo" Dimension="1*3">
         <Object ObjectID="15">
+          <P Name="Type" Class="char">GLUE2:PropertyInspector</P>
+          <P Name="ID" Class="char">Property Inspector</P>
+          <P Name="Visible" Class="logical">0</P>
+          <P Name="CreateCallback" Class="char"/>
+          <P Name="UserData" Class="char"/>
+          <P Name="Floating" Class="logical">0</P>
+          <P Name="DockPosition" Class="char">Right</P>
+          <P Name="Width" Class="int32">640</P>
+          <P Name="Height" Class="int32">480</P>
+          <P Name="Minimized" Class="char">Unset</P>
+        </Object>
+        <Object ObjectID="16">
           <P Name="Type" Class="char">Simulink:Editor:ReferencedFiles</P>
           <P Name="ID" Class="char">Referenced Files</P>
           <P Name="Visible" Class="logical">0</P>
@@ -2355,7 +2491,7 @@ __MWOPC_PART_BEGIN__ /simulink/windowsInfo.xml
           <P Name="Height" Class="int32">480</P>
           <P Name="Minimized" Class="char">Unset</P>
         </Object>
-        <Object ObjectID="16">
+        <Object ObjectID="17">
           <P Name="Type" Class="char">GLUE2:SpreadSheet</P>
           <P Name="ID" Class="char">ModelData</P>
           <P Name="Visible" Class="logical">0</P>
@@ -2367,20 +2503,8 @@ __MWOPC_PART_BEGIN__ /simulink/windowsInfo.xml
           <P Name="Height" Class="int32">480</P>
           <P Name="Minimized" Class="char">Unset</P>
         </Object>
-        <Object ObjectID="17">
-          <P Name="Type" Class="char">GLUE2:PropertyInspector</P>
-          <P Name="ID" Class="char">Property Inspector</P>
-          <P Name="Visible" Class="logical">0</P>
-          <P Name="CreateCallback" Class="char"/>
-          <P Name="UserData" Class="char"/>
-          <P Name="Floating" Class="logical">0</P>
-          <P Name="DockPosition" Class="char">Right</P>
-          <P Name="Width" Class="int32">640</P>
-          <P Name="Height" Class="int32">480</P>
-          <P Name="Minimized" Class="char">Unset</P>
-        </Object>
       </Array>
-      <P Name="WindowState" Class="char">AAAA/wAAAAD9AAAAAwAAAAAAAAC9AAAB+PwCAAAABPsAAAAWAEQAbwBjAGsAVwBpAGQAZwBlAHQAMwEAAAAxAAAB+AAAAAAAAAAA+wAAABYARABvAGMAawBXAGkAZABnAGUAdAA0AAAAAAD/////AAAAAAAAAAD7AAAAUgBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0AcABvAG4AZQBuAHQALwBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0AcABvAG4AZQBuAHQAAAAAAP////8AAABjAP////sAAABgAFMAaQBtAHUAbABpAG4AawA6AEUAZABpAHQAbwByADoAUgBlAGYAZQByAGUAbgBjAGUAZABGAGkAbABlAHMALwBSAGUAZgBlAHIAZQBuAGMAZQBkACAARgBpAGwAZQBzAAAAAAD/////AAAAjAD///8AAAABAAAAAAAAAAD8AgAAAAH7AAAAVABHAEwAVQBFADIAOgBQAHIAbwBwAGUAcgB0AHkASQBuAHMAcABlAGMAdABvAHIALwBQAHIAbwBwAGUAcgB0AHkAIABJAG4AcwBwAGUAYwB0AG8AcgAAAAAA/////wAAAawA////AAAAAwAABCwAAADz/AEAAAAC+wAAADYARwBMAFUARQAyADoAUwBwAHIAZQBhAGQAUwBoAGUAZQB0AC8ATQBvAGQAZQBsAEQAYQB0AGEAAAAAAAAABCwAAAEYAP////v/////AAAAAAD/////AAABWQD///8AAAQsAAACnAAAAAEAAAACAAAAAQAAAAL8AAAAAA==</P>
+      <P Name="WindowState" Class="char">AAAA/wAAAAD9AAAAAwAAAAAAAAC9AAAB+PwCAAAABPsAAAAWAEQAbwBjAGsAVwBpAGQAZwBlAHQAMwEAAAAxAAAB+AAAAAAAAAAA+wAAABYARABvAGMAawBXAGkAZABnAGUAdAA0AAAAAAD/////AAAAAAAAAAD7AAAAUgBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0AcABvAG4AZQBuAHQALwBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0AcABvAG4AZQBuAHQAAAAAAP////8AAABjAP////sAAABgAFMAaQBtAHUAbABpAG4AawA6AEUAZABpAHQAbwByADoAUgBlAGYAZQByAGUAbgBjAGUAZABGAGkAbABlAHMALwBSAGUAZgBlAHIAZQBuAGMAZQBkACAARgBpAGwAZQBzAAAAAAD/////AAAAjAD///8AAAABAAAAAAAAAAD8AgAAAAH7AAAAVABHAEwAVQBFADIAOgBQAHIAbwBwAGUAcgB0AHkASQBuAHMAcABlAGMAdABvAHIALwBQAHIAbwBwAGUAcgB0AHkAIABJAG4AcwBwAGUAYwB0AG8AcgAAAAAA/////wAAAawA////AAAAAwAABCwAAADz/AEAAAAC+wAAADYARwBMAFUARQAyADoAUwBwAHIAZQBhAGQAUwBoAGUAZQB0AC8ATQBvAGQAZQBsAEQAYQB0AGEAAAAAAAAABCwAAAEYAP////v/////AAAAAAD/////AAABWQD///8AAAQEAAACgwAAAAEAAAACAAAAAQAAAAL8AAAAAA==</P>
       <Array PropName="PersistedApps" Type="Cell" Dimension="0*1"/>
       <P Name="WindowUuid" Class="char">e0e8385d-6640-4058-8ec3-5bc5b8afb3aa</P>
     </Object>
