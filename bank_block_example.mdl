@@ -7,7 +7,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.2"
+    ComputedModelVersion    "1.5"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -40,7 +40,7 @@ Model {
       $ObjectID		      3
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [66.0, 16.0, 1056.0, 728.0]
+      Location		      [59.0, 67.0, 1056.0, 728.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		4
@@ -64,7 +64,7 @@ Model {
 	IsActive		[1]
 	ViewObjType		"SimulinkTopLevel"
 	LoadSaveID		"0"
-	Extents			[1006.0, 550.0]
+	Extents			[1006.0, 553.0]
 	ZoomFactor		[1.0]
 	Offset			[-22.8671875, 0.0]
       }
@@ -76,9 +76,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "gcampa"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu Dec 10 20:54:15 2020"
-  RTWModifiedTimeStamp	  529534432
-  ModelVersionFormat	  "1.%<AutoIncrement:2>"
+  LastModifiedDate	  "Fri Jul 05 12:33:44 2024"
+  RTWModifiedTimeStamp	  642083621
+  ModelVersionFormat	  "1.%<AutoIncrement:5>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -831,6 +831,9 @@ Model {
       SampleTime	      "-1"
     }
     Block {
+      BlockType		      Ground
+    }
+    Block {
       BlockType		      Scope
       DefaultConfigurationName "Simulink.scopes.TimeScopeBlockCfg"
       NumInputPorts	      "1"
@@ -839,7 +842,7 @@ Model {
   }
   System {
     Name		    "bank_block_example"
-    Location		    [66, 16, 1122, 744]
+    Location		    [59, 67, 1115, 795]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -853,13 +856,13 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "52"
+    SIDHighWatermark	    "77"
     Block {
       BlockType		      Scope
       Name		      "Available"
       SID		      "51"
       Ports		      [1]
-      Position		      [360, 279, 390, 311]
+      Position		      [315, 229, 345, 261]
       ZOrder		      139
       NamePlacement	      "alternate"
       ScopeSpecificationString "Simulink.scopes.TimeScopeBlockCfg('CurrentConfiguration', extmgr.ConfigurationSet(extm"
@@ -871,23 +874,50 @@ Model {
       ",[1 1 0.0666666666666667;0.0745098039215686 0.623529411764706 1;1 0.411764705882353 0.16078431372549;0.392156862"
       "745098 0.831372549019608 0.0745098039215686;0.717647058823529 0.274509803921569 1;0.0588235294117647 1 1;1 0.074"
       "5098039215686 0.650980392156863],'Title','%<SignalLabel>','LinePropertiesCache',{{}},'UserDefinedChannelNames',{"
-      "{}},'NumLines',0,'LineNames',{{[]}},'ShowContent',true,'Placement',1)},'DisplayPropertyDefaults',struct('MinYLim"
-      "Real','4314.45911','MaxYLimReal','11169.86804','YLabelReal','','MinYLimMag','4314.45911','MaxYLimMag','11169.868"
-      "04','LegendVisibility','off','XGrid',true,'YGrid',true,'PlotMagPhase',false,'AxesColor',[0 0 0],'AxesTickColor',"
-      "[0.686274509803922 0.686274509803922 0.686274509803922],'ColorOrder',[0.0745098039215686 0.623529411764706 1;1 0"
-      ".411764705882353 0.16078431372549;1 1 0.0666666666666667;0.717647058823529 0.274509803921569 1;0.392156862745098"
-      " 0.831372549019608 0.0745098039215686;0.0588235294117647 1 1;1 0.0745098039215686 0.650980392156863])),extmgr.Co"
-      "nfiguration('Tools','Plot Navigation',true),extmgr.Configuration('Tools','Measurements',true,'Version','2015b'))"
-      ",'Version','2015b','Position',[1130 337 458 274],'VisibleAtModelOpen','on')"
+      "{}},'NumLines',1,'LineNames',{{'Checking Account'}},'ShowContent',true,'Placement',1)},'DisplayPropertyDefaults'"
+      ",struct('MinYLimReal','4314.45911','MaxYLimReal','11169.86804','YLabelReal','','MinYLimMag','4314.45911','MaxYLi"
+      "mMag','11169.86804','LegendVisibility','off','XGrid',true,'YGrid',true,'PlotMagPhase',false,'AxesColor',[0 0 0],"
+      "'AxesTickColor',[0.686274509803922 0.686274509803922 0.686274509803922],'ColorOrder',[0.0745098039215686 0.62352"
+      "9411764706 1;1 0.411764705882353 0.16078431372549;1 1 0.0666666666666667;0.717647058823529 0.274509803921569 1;0"
+      ".392156862745098 0.831372549019608 0.0745098039215686;0.0588235294117647 1 1;1 0.0745098039215686 0.650980392156"
+      "863])),extmgr.Configuration('Tools','Plot Navigation',true),extmgr.Configuration('Tools','Measurements',true,'Ve"
+      "rsion','2015b')),'Version','2015b','Position',[960 462 458 274],'VisibleAtModelOpen','on')"
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "Balance"
+      SID		      "53"
+      Ports		      [1]
+      Position		      [315, 394, 345, 426]
+      ZOrder		      144
+      NamePlacement	      "alternate"
+      ScopeSpecificationString "Simulink.scopes.TimeScopeBlockCfg('CurrentConfiguration', extmgr.ConfigurationSet(extm"
+      "gr.Configuration('Core','General UI',true),extmgr.Configuration('Core','Source UI',true),extmgr.Configuration('S"
+      "ources','WiredSimulink',true,'DataLoggingVariableName','ScopeData1'),extmgr.Configuration('Visuals','Time Domain"
+      "',true,'SerializedDisplays',{struct('MinYLimReal','336155.72157','MaxYLimReal','407093.80871','YLabelReal','','M"
+      "inYLimMag','336155.72157','MaxYLimMag','407093.80871','LegendVisibility','off','XGrid',true,'YGrid',true,'PlotMa"
+      "gPhase',false,'AxesColor',[0 0 0],'AxesTickColor',[0.686274509803922 0.686274509803922 0.686274509803922],'Color"
+      "Order',[1 1 0.0666666666666667;0.0745098039215686 0.623529411764706 1;1 0.411764705882353 0.16078431372549;0.392"
+      "156862745098 0.831372549019608 0.0745098039215686;0.717647058823529 0.274509803921569 1;0.0588235294117647 1 1;1"
+      " 0.0745098039215686 0.650980392156863],'Title','%<SignalLabel>','LinePropertiesCache',{{}},'UserDefinedChannelNa"
+      "mes',{{}},'NumLines',1,'LineNames',{{'Mortgage Balance (Principal left to pay)'}},'ShowContent',true,'Placement'"
+      ",1)},'DisplayPropertyDefaults',struct('MinYLimReal','336155.72157','MaxYLimReal','407093.80871','YLabelReal','',"
+      "'MinYLimMag','336155.72157','MaxYLimMag','407093.80871','LegendVisibility','off','XGrid',true,'YGrid',true,'Plot"
+      "MagPhase',false,'AxesColor',[0 0 0],'AxesTickColor',[0.686274509803922 0.686274509803922 0.686274509803922],'Col"
+      "orOrder',[0.0745098039215686 0.623529411764706 1;1 0.411764705882353 0.16078431372549;1 1 0.0666666666666667;0.7"
+      "17647058823529 0.274509803921569 1;0.392156862745098 0.831372549019608 0.0745098039215686;0.0588235294117647 1 1"
+      ";1 0.0745098039215686 0.650980392156863])),extmgr.Configuration('Tools','Plot Navigation',true),extmgr.Configura"
+      "tion('Tools','Measurements',true,'Version','2015b')),'Version','2015b','Position',[962 260 458 274],'VisibleAtMo"
+      "delOpen','on')"
     }
     Block {
       BlockType		      Reference
       Name		      "Checking Account"
       SID		      "50"
       Ports		      [2, 1]
-      Position		      [200, 245, 275, 345]
+      Position		      [155, 195, 230, 295]
       ZOrder		      143
-      LibraryVersion	      "1.2"
+      LibraryVersion	      "1.3"
       SourceBlock	      "moneylib/Bank Account"
       SourceType	      "Bank Account"
       ContentPreviewEnabled   off
@@ -900,7 +930,7 @@ Model {
       Name		      "Display"
       SID		      "44"
       Ports		      [1]
-      Position		      [360, 155, 450, 185]
+      Position		      [315, 105, 405, 135]
       ZOrder		      137
       Format		      "bank"
       Decimation	      "1"
@@ -910,16 +940,33 @@ Model {
       Name		      "Display1"
       SID		      "47"
       Ports		      [1]
-      Position		      [360, 315, 450, 345]
+      Position		      [315, 265, 405, 295]
       ZOrder		      142
       Format		      "bank"
       Decimation	      "1"
     }
     Block {
+      BlockType		      Display
+      Name		      "Display2"
+      SID		      "55"
+      Ports		      [1]
+      Position		      [315, 430, 405, 460]
+      ZOrder		      147
+      Format		      "bank"
+      Decimation	      "1"
+    }
+    Block {
+      BlockType		      Ground
+      Name		      "Ground"
+      SID		      "59"
+      Position		      [40, 375, 60, 395]
+      ZOrder		      149
+    }
+    Block {
       BlockType		      Constant
       Name		      "Monthly Deposit ($)"
       SID		      "41"
-      Position		      [85, 95, 115, 125]
+      Position		      [40, 45, 70, 75]
       ZOrder		      135
       Value		      "700"
     }
@@ -927,7 +974,7 @@ Model {
       BlockType		      Constant
       Name		      "Monthly Deposit ($) "
       SID		      "48"
-      Position		      [85, 255, 115, 285]
+      Position		      [40, 205, 70, 235]
       ZOrder		      140
       Value		      "700"
     }
@@ -935,24 +982,47 @@ Model {
       BlockType		      Constant
       Name		      "Monthly Explenses ($)"
       SID		      "49"
-      Position		      [85, 305, 115, 335]
+      Position		      [40, 255, 70, 285]
       ZOrder		      141
       Value		      "600"
     }
     Block {
       BlockType		      Constant
+      Name		      "Monthly Payment ($)"
+      SID		      "57"
+      Position		      [40, 420, 90, 450]
+      ZOrder		      146
+      Value		      "2661.21"
+    }
+    Block {
+      BlockType		      Constant
       Name		      "Monthly Withdrawals ($)"
       SID		      "42"
-      Position		      [85, 145, 115, 175]
+      Position		      [40, 95, 70, 125]
       ZOrder		      136
       Value		      "0"
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "Mortgage Balance\n(Principal left to pay)"
+      SID		      "54"
+      Ports		      [2, 1]
+      Position		      [155, 360, 230, 460]
+      ZOrder		      148
+      LibraryVersion	      "1.3"
+      SourceBlock	      "moneylib/Bank Account"
+      SourceType	      "Bank Account"
+      ContentPreviewEnabled   off
+      i			      "0.07/12"
+      j			      "0"
+      x0		      "400000"
     }
     Block {
       BlockType		      Scope
       Name		      "Savings"
       SID		      "40"
       Ports		      [1]
-      Position		      [360, 119, 390, 151]
+      Position		      [315, 69, 345, 101]
       ZOrder		      134
       NamePlacement	      "alternate"
       ScopeSpecificationString "Simulink.scopes.TimeScopeBlockCfg('CurrentConfiguration', extmgr.ConfigurationSet(extm"
@@ -963,24 +1033,24 @@ Model {
       "Color',[0.686274509803922 0.686274509803922 0.686274509803922],'ColorOrder',[1 1 0.0666666666666667;0.0745098039"
       "215686 0.623529411764706 1;1 0.411764705882353 0.16078431372549;0.392156862745098 0.831372549019608 0.0745098039"
       "215686;0.717647058823529 0.274509803921569 1;0.0588235294117647 1 1;1 0.0745098039215686 0.650980392156863],'Tit"
-      "le','%<SignalLabel>','LinePropertiesCache',{{}},'UserDefinedChannelNames',{{}},'NumLines',0,'LineNames',{{[]}},'"
-      "ShowContent',true,'Placement',1)},'DisplayPropertyDefaults',struct('MinYLimReal','-8191.12834','MaxYLimReal','12"
-      "3720.15506','YLabelReal','','MinYLimMag','  0.00000','MaxYLimMag','123720.15506','LegendVisibility','off','XGrid"
-      "',true,'YGrid',true,'PlotMagPhase',false,'AxesColor',[0 0 0],'AxesTickColor',[0.686274509803922 0.68627450980392"
-      "2 0.686274509803922],'ColorOrder',[0.0745098039215686 0.623529411764706 1;1 0.411764705882353 0.16078431372549;1"
-      " 1 0.0666666666666667;0.717647058823529 0.274509803921569 1;0.392156862745098 0.831372549019608 0.07450980392156"
-      "86;0.0588235294117647 1 1;1 0.0745098039215686 0.650980392156863])),extmgr.Configuration('Tools','Plot Navigatio"
-      "n',true),extmgr.Configuration('Tools','Measurements',true,'Version','2015b')),'Version','2015b','Position',[1129"
-      " 703 457 277],'VisibleAtModelOpen','on')"
+      "le','%<SignalLabel>','LinePropertiesCache',{{}},'UserDefinedChannelNames',{{}},'NumLines',1,'LineNames',{{'Savin"
+      "gs Account'}},'ShowContent',true,'Placement',1)},'DisplayPropertyDefaults',struct('MinYLimReal','-8191.12834','M"
+      "axYLimReal','123720.15506','YLabelReal','','MinYLimMag','  0.00000','MaxYLimMag','123720.15506','LegendVisibilit"
+      "y','off','XGrid',true,'YGrid',true,'PlotMagPhase',false,'AxesColor',[0 0 0],'AxesTickColor',[0.686274509803922 0"
+      ".686274509803922 0.686274509803922],'ColorOrder',[0.0745098039215686 0.623529411764706 1;1 0.411764705882353 0.1"
+      "6078431372549;1 1 0.0666666666666667;0.717647058823529 0.274509803921569 1;0.392156862745098 0.831372549019608 0"
+      ".0745098039215686;0.0588235294117647 1 1;1 0.0745098039215686 0.650980392156863])),extmgr.Configuration('Tools',"
+      "'Plot Navigation',true),extmgr.Configuration('Tools','Measurements',true,'Version','2015b')),'Version','2015b','"
+      "Position',[957 89 457 277],'VisibleAtModelOpen','on')"
     }
     Block {
       BlockType		      Reference
       Name		      "Savings Account"
       SID		      "46"
       Ports		      [2, 1]
-      Position		      [200, 85, 275, 185]
+      Position		      [155, 35, 230, 135]
       ZOrder		      138
-      LibraryVersion	      "1.2"
+      LibraryVersion	      "1.3"
       SourceBlock	      "moneylib/Bank Account"
       SourceType	      "Bank Account"
       ContentPreviewEnabled   off
@@ -1050,6 +1120,37 @@ Model {
       DstBlock		      "Checking Account"
       DstPort		      1
     }
+    Line {
+      ZOrder		      25
+      SrcBlock		      "Monthly Payment ($)"
+      SrcPort		      1
+      DstBlock		      "Mortgage Balance\n(Principal left to pay)"
+      DstPort		      2
+    }
+    Line {
+      ZOrder		      28
+      SrcBlock		      "Mortgage Balance\n(Principal left to pay)"
+      SrcPort		      1
+      Points		      [43, 0]
+      Branch {
+	ZOrder			27
+	Points			[0, 35]
+	DstBlock		"Display2"
+	DstPort			1
+      }
+      Branch {
+	ZOrder			26
+	DstBlock		"Balance"
+	DstPort			1
+      }
+    }
+    Line {
+      ZOrder		      30
+      SrcBlock		      "Ground"
+      SrcPort		      1
+      DstBlock		      "Mortgage Balance\n(Principal left to pay)"
+      DstPort		      1
+    }
     Annotation {
       SID		      "43"
       Name		      "Here a sum of $700 goes in a savings account each month for 120 months (10 years).\nIt is assumed t"
@@ -1059,7 +1160,7 @@ Model {
       "4/12)+700;end,x\".\nUsing the non-recursive function \"bond\" (see the \"others\" folder), you can alternatively"
       " express this as: \"bond(5000,-700,-120,0.04/12)\". Look under the mask for more insight.\nAlso, bank=ss(1+0.04/"
       "12,1,1,0,1);y=lsim(bank,700*ones(1,121),0:120,5000);y(end)\n>> y=lsim(bank,700*ones(1,121),0:120,5000);y(end)"
-      Position		      [493, 85, 903, 203]
+      Position		      [448, 35, 858, 153]
       InternalMargins	      [0, 0, 0, 0]
       FixedHeight	      on
       FixedWidth	      on
@@ -1072,10 +1173,34 @@ Model {
       "5000. \nThe present-discounted value of expenses is 600 each month. This means that, due to inflation, the actua"
       "l withdrawals increase of 1% each year (look under the mask).\n\nIn MATLAB, this is equivalent to: \n\"x=5000;fo"
       "r i=0:119,x=x*(1+0.01/12)+700-600*(1+0.02/12)^i;end,x\"."
-      Position		      [493, 255, 903, 373]
+      Position		      [448, 195, 858, 313]
       InternalMargins	      [0, 0, 0, 0]
       FixedHeight	      on
       FixedWidth	      on
+      ZOrder		      -1
+    }
+    Annotation {
+      SID		      "58"
+      Name		      "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+      "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }"
+      "\n</style></head><body style=\" font-family:'Helvetica'; font-size:10px; font-weight:400; font-style:normal;\">\n"
+      "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-inden"
+      "t:0px;\"><span style=\" font-size:10px;\">Here the block represents the remaining amount of principal left to pa"
+      "y after you take a 30 year mortgage of 400.000$ at 7/12% montly interest rate, and pay montlhy rates of 2661.21."
+      " The monthly payment is calculated using (MortgageValue*MortgagaRate)/(1-(1+MortgageRate)^-(MortgageYears*12)), "
+      "or altertatively using the function &quot;mort&quot; (see the &quot;others&quot; folder): mort(0,MortgageValue,3"
+      "60,MortgageRate). Of course the balance extinguishes faster if you inclrease the monthly rate. Note that deposit"
+      "s must be zero (you don't add  to the borrowed balance) and inflation must be zero (unless you plan to increase "
+      "your payments exponentially with time. <br /></span></p>\n<p style=\" margin-top:0px; margin-bottom:0px; margin-"
+      "left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10px;\">In MATLAB, t"
+      "his is equivalent to</span></p>\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0p"
+      "x; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10px;\">&quot;x=400000;for i=0:119,x=x*(1+0.0"
+      "7/12)-2661.21;end,x&quot;.</span></p></body></html>"
+      Position		      [448, 355, 858, 503]
+      InternalMargins	      [0, 0, 0, 0]
+      FixedHeight	      on
+      FixedWidth	      on
+      Interpreter	      "rich"
       ZOrder		      -1
     }
   }
